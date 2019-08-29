@@ -1,0 +1,470 @@
+openapi: 3.0.0
+info:
+  title: Test Api
+  description: API description in Markdown.
+  version: 1.0.0
+host: 'localhost:3001'
+basePath: /api/v1
+schemes:
+  - http
+produces:
+  - application/json
+paths:
+  /user/create/admin:
+    post:
+      tags:
+        - user
+      summary: Create user with admin role
+      operationId: createAdminUser
+      description: Create user with admin role
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionReq'
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResp'
+        '400':
+          description: Bad input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+  /user/create/viewer:
+    post:
+      tags:
+        - user
+      summary: Create user with viewer role
+      operationId: createViewerUser
+      description: Create user with viewer role
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionReq'
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResp'
+        '400':
+          description: Bad input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+  /user/create/editor:
+    post:
+      tags:
+        - user
+      summary: Create user with editor role
+      operationId: createEditorUser
+      description: Create user with editor role
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionReq'
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResp'
+        '400':
+          description: Bad input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+  /login:
+    post:
+      tags:
+        - auth
+      summary: Add session
+      operationId: addSession
+      description: Create session (SignIn)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionReq'
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResp'
+        '400':
+          description: Bad input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+  /logout:
+    delete:
+      tags:
+        - auth
+      summary: Delete current session.
+      operationId: deleteSession
+      description: |
+        Possible add JWT to BLACK LIST. You should remove token 
+        in your local storage or whatever when you saved that
+      responses:
+        '200':
+          description: Ok.
+  /sections:
+    get:
+      tags:
+        - sections
+      summary: Show all sections
+      operationId: getSection
+      security:
+        - bearerAuth: []
+      description: |
+        Show sections.
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddSectionResp'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+    post:
+      tags:
+        - sections
+      summary: Add root section
+      operationId: addSection
+      security:
+        - bearerAuth: []
+      description: |
+        Add section.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRootSectionReq'
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddSectionResp'
+        '400':
+          description: Bad input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+  '/sections/{id}':
+    post:
+      tags:
+        - sections
+      summary: Add section to existing root section
+      operationId: addSectionId
+      parameters:
+        - name: id
+          in: path
+          description: ID of section
+          required: true
+          schema:
+            type: integer
+            example: 2
+      security:
+        - bearerAuth: []
+      description: |
+        Add section.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRootSectionReq'
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddSectionResp'
+        '400':
+          description: Bad input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+    put:
+      tags:
+        - sections
+      summary: Edit section
+      operationId: editSectionId
+      parameters:
+        - name: id
+          in: path
+          description: ID of section
+          required: true
+          schema:
+            type: integer
+            example: 2
+      security:
+        - bearerAuth: []
+      description: |
+        Edit section.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRootSectionReq'
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddSectionResp'
+        '400':
+          description: Bad input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+    delete:
+      tags:
+        - sections
+      summary: Delete section
+      operationId: deleteSectionId
+      parameters:
+        - name: id
+          in: path
+          description: ID of section
+          required: true
+          schema:
+            type: integer
+            example: 2
+      security:
+        - bearerAuth: []
+      description: |
+        Delete section.
+      responses:
+        '200':
+          description: Ok.
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    CreateUserResp:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        user:
+          type: object
+          properties:
+            id:
+              type: number
+              example: 12
+            permissions:
+              type: string
+              example: admin
+    CreateSessionReq:
+      type: object
+      required:
+        - login
+        - password
+      properties:
+        login:
+          type: string
+          example: opgueas | opiguez@mail.ru
+        password:
+          type: string
+          minLength: 6
+          maxLength: 128
+          description: >-
+            Number (category N) + symbolic character || punctuation character
+            (category P)
+    LoginResp:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        token:
+          type: string
+          example: >
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVSUQiOjIsIlJvbGUiOjUsIkFkZHIiOiIxMjcuMC4wLjE6NTY5OTMiLCJleHAiOjE1N
+
+            jQ0NjAyMjEsImp0aSI6IjAzNjA0YzAxLTNmMjYtNGIwMC04ZTliLWMzYTMxYWI4MjY0MiJ9.IGWEYHnAv8ysDCOHmd7RdBaVrYpMFHPrt0
+
+            kX_BTiyco
+    ErrorResp:
+      type: object
+      properties:
+        status:
+          type: string
+          example: error
+        description:
+          type: string
+          example: Bad input parameters | Forbidden | Unauthorized
+    AddRootSectionReq:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Section 1
+    AddSectionResp:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        result:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Section 123ddas2k
+            parentId:
+              type: string
+              example: 'null'
+            createdAt:
+              type: string
+              example: '2019-08-29T09:52:22.917Z'
+            id:
+              type: number
+              example: 12
