@@ -1,0 +1,48 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc-watch --onSuccess \"node ./dist/server.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/compression": "0.0.36",
+    "@types/cors": "^2.8.5",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.17.0",
+    "@types/jsonwebtoken": "^8.3.3",
+    "@types/node": "^12.6.8",
+    "@types/password-hash": "^1.2.20",
+    "@types/request-promise": "^4.1.44",
+    "@types/swagger-ui-express": "^3.0.1",
+    "@types/yamljs": "^0.2.30",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^5.0.0-alpha.7",
+    "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.0",
+    "password-hash": "^1.2.2",
+    "pg": "^7.12.0",
+    "reflect-metadata": "^0.1.13",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "swagger-ui-express": "^4.0.7",
+    "tsc-watch": "^2.2.1",
+    "typeorm": "^0.2.18",
+    "typescript": "^3.5.3",
+    "yamljs": "^0.3.0"
+  },
+  "_moduleAliases": {
+    "@middleware": "dist/middleware",
+    "@services": "dist/services",
+    "@utils": "dist/utils",
+    "@entity": "dist/entity",
+    "@config": "dist/config"
+  }
+}
