@@ -3,7 +3,7 @@ import { Response } from 'express';
 
 import * as CHECKS_USER from './checks';
 import { createRootSection, createSection, deleteSection, editSection }  from './providers/cudSection';
-import { getSections } from './providers/findSections';
+import { getSections, getSectionById } from './providers/findSections';
 import { SectionRequest } from './types';
 import resDescCreator, { NameStatus } from '@utils/resDescCreator';
 import { UserRole } from '@entity/User';
@@ -32,6 +32,7 @@ export default [
     handler: [
       CHECKS_USER.checkRequiredFieldsForNewSection,
       CHECKS_USER.checkDataFromReq,
+      CHECKS_USER.checkExistingSection,
       auth,
       permit(UserRole.ADMIN, UserRole.SECTION_EDITOR),
       async (req: SectionRequest, res: Response) => {
@@ -47,6 +48,7 @@ export default [
     handler: [
       CHECKS_USER.checkRequiredFieldsForNewSection,
       CHECKS_USER.checkDataFromReq,
+      CHECKS_USER.checkExistingSection,
       auth,
       permit(UserRole.ADMIN, UserRole.SECTION_EDITOR),
       async (req: SectionRequest, res: Response) => {
@@ -60,6 +62,7 @@ export default [
     path: `${API_URL}sections/:id`,
     method: 'delete',
     handler: [
+      CHECKS_USER.checkExistingSection,
       auth,
       permit(UserRole.ADMIN, UserRole.SECTION_EDITOR),
       async (req: SectionRequest, res: Response) => {

@@ -18,7 +18,7 @@ process.on('unhandledRejection', e => {
 });
 
 const router = express();
-const { PORT = 3001, IP } = process.env;
+const { PORT = 3002, IP } = process.env;
 const server = http.createServer(router);
 
 (async () => {
