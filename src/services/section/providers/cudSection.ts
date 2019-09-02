@@ -4,6 +4,7 @@ import { BodySection } from '../types';
 import Section from '@entity/Section';
 import { getSectionById } from './findSections';
 
+//переделать в 1 функцию 
 export const createRootSection = async (body: BodySection) => {
   let { name } = body;
   name = name.trim();
@@ -16,7 +17,7 @@ export const createRootSection = async (body: BodySection) => {
   await manager.save(section);
   return section;
 };
-
+//переделать в 1 функцию 
 export const createSection = async (body: BodySection, id: string) => {
   let { name } = body;
   name = name.trim();
