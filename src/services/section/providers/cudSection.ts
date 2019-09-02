@@ -4,29 +4,21 @@ import { BodySection } from '../types';
 import Section from '@entity/Section';
 import { getSectionById } from './findSections';
 
-//переделать в 1 функцию 
-export const createRootSection = async (body: BodySection) => {
+
+export const createSection = async (body: BodySection, id?: string) => {
   let { name } = body;
   name = name.trim();
-
-  const manager = await getManager();
-
-  const section = new Section();
-  section.name = name;
-
-  await manager.save(section);
-  return section;
-};
-//переделать в 1 функцию 
-export const createSection = async (body: BodySection, id: string) => {
-  let { name } = body;
-  name = name.trim();
+  let sectionParent = null;
+  if (id) {
+    sectionParent = await getSectionById(Number(id));
+  }
   
-  const sectionParent = await getSectionById(Number(id));
   const manager = await getManager();
 
   const section = new Section();
-  section.parent = sectionParent;
+  if (sectionParent) {
+    section.parent = sectionParent;
+  }
   section.name = name;
 
   await manager.save(section);
